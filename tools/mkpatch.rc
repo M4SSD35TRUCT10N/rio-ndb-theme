@@ -1,0 +1,26 @@
+#!/bin/rc
+# Usage: tools/mkpatch.rc patches/0001-rio-ndb-theme.diff
+rfork e
+out=$1
+if(~ $#out 0){
+	echo 'Usage: tools/mkpatch.rc patches/0001-rio-ndb-theme.diff'
+	exit 'no out'
+}
+RIO=/sys/src/cmd/rio
+
+if(! test -d $RIO){
+	echo 'rio-Quelle nicht gefunden unter /sys/src/cmd/rio'
+	exit 'no rio'
+}
+
+# Sicherstellen, dass theme.c/.h im Baum liegen
+if(! test -f $RIO/theme.c || ! test -f $RIO/theme.h){
+	echo 'theme.c/.h fehlen im rio-Baum – zuerst tools/build.rc ausführen'
+	exit 'no files'
+}
+
+cd $RIO
+git/diff . > /tmp/rio-ndb-theme.diff
+mkdir -p `{basename -d $out}
+cp /tmp/rio-ndb-theme.diff $out
+echo 'Patch geschrieben nach' $out
