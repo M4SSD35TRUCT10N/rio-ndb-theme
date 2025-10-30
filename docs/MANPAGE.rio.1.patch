@@ -1,0 +1,71 @@
+--- a/sys/man/1/rio
++++ b/sys/man/1/rio
+@@
+ .SH DESCRIPTION
+@@
++ .SS NDB-configurable colors (optional)
++ .PP
++ Rio can optionally read its initial color scheme from NDB records. Rio searches, in this order,
++ .IR /usr/$user/lib/ndb/rio
++ and
++ .IR /lib/ndb/rio ,
++ for a record with attribute
++ .B service=rio
++ and an optional
++ .B theme
++ attribute.
++ When a matching record is found, the following keys are recognized (values are hex
++ .RI "#RRGGBB" ):
++ .B bg ,
++ .B fg ,
++ .B border ,
++ .B selbg ,
++ .B selfg ,
++ and
++ .B mouse .
++ If no matching record is present, rio falls back to its built-in defaults.
++ .PP
++ The effective colors are resolved with the following precedence:
++ built-in defaults,
++ then NDB,
++ then the
++ .B -b
++ option (black background),
++ and finally selections done at runtime via the
++ .B look
++ menu.
++ .PP
++ Example NDB entries:
++ .EX
++ service=rio theme=custom \\
++     bg=#101418 fg=#e6e6e6 border=#6c6c6c \\
++     selbg=#2e4a6f selfg=#ffffff mouse=#ffcc00
++ .EE
++
+@@
+ .SH FILES
+@@
++.TP
++.I /lib/ndb/rio
++System-wide optional color definitions for rio (NDB).
++.TP
++.I /usr/$user/lib/ndb/rio
++Per-user optional color definitions for rio (NDB).
++
+@@
+ .SH ENVIRONMENT
+@@
++.TP
++.B RIOTHEME
++If set, selects the value of the
++.B theme
++attribute to match in the NDB record (see
++.B NDB-configurable colors
++above).
++
+@@
+ .SH SEE ALSO
+-...
++...
++.PP
++.IR ndb (6)
