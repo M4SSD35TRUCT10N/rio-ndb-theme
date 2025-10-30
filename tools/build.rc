@@ -1,0 +1,18 @@
+#!/bin/rc
+# Kopiert theme.c/.h in den rio-Baum und baut.
+rfork e
+RIO=/sys/src/cmd/rio
+
+if(! test -f src/theme.c || ! test -f src/theme.h){
+	echo 'Bitte im Repo-Verzeichnis ausführen. src/theme.* fehlt.'
+	exit 'no src'
+}
+
+cp src/theme.c $RIO/theme.c
+cp src/theme.h $RIO/theme.h
+
+# mkfile anpassen: theme.$O in OFILES, theme.h in HFILES (falls noch nicht)
+# (Einmalig manuell; danach nur noch mk)
+cd $RIO
+mk install
+echo 'Fertig. Bitte rio neu starten.'
