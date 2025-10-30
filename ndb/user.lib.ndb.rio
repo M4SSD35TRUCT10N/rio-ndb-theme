@@ -1,0 +1,3 @@
+service=rio theme=dark \
+    bg=#000000 fg=#e0e0e0 border=#404040 \
+    selbg=#284070 selfg=#ffffff mouse=#e0e0e0
